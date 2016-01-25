@@ -91,7 +91,7 @@ Authenticate a login token, returning the associated `sys/login` and `sys/user` 
 the token is valid and active. Use this, for example, when handling
 HTTP requests with an authentication cookie, to get the user.
 
-#### Arguments: [Token]
+#### Arguments: [Token][]
 #### Result
 Same object format as login command result: `{ok:true|false,user:,login:}`
 
@@ -155,7 +155,7 @@ The user identified by the reset token is allowed to change their password. THe 
    * `salt`- _string_ : the salt string to use, find this in user.salt
    * `pass`- _string_ : the pass string to use, find this in user.pass
    * `proposed`- _string_ : the proposed plaintext password to verify
-#### Result : [OperationStatus]
+#### Result : [OperationStatus][]
 
 ### update-user - Updates a user
 #### Pattern `role:user, cmd:update`
@@ -166,25 +166,25 @@ The user identified by the reset token is allowed to change their password. THe 
    * `orig_email`- _string_ : if email will be changed on this update then `orig_email` will be used to identify the user
 
 At least one of these arguments must be present.
-#### Result: [OperationStatus]
+#### Result: [OperationStatus][]
 
 ### activate-user - Deletes an user and all relationed records.
 #### Pattern: `role:user, cmd:remove`
 #### Arguments
 ` `nick` - _string_ : the nick of the user to be updated
-#### Result: [OperationStatus]
+#### Result: [OperationStatus][]
 
 
 ### activate-user - Enables an user.
 #### Pattern: `role:user, cmd:activate`
-#### Arguments: [UserIdentification]
-#### Result : [OperationStatus]
+#### Arguments: [UserIdentification][]
+#### Result : [OperationStatus][]
 
 
 ### disable-user - Disables an user.
 #### Pattern: `role:user, cmd:deactivate`
-#### Arguments: [UserIdentification]
-#### Result : [OperationStatus]
+#### Arguments: [UserIdentification][]
+#### Result : [OperationStatus][]
 
 ## Schemas
 ### Message
@@ -234,8 +234,12 @@ You can add your own properties, but be careful not to use the standard property
 ##### Path: `-/sys/reset`
 ##### About
 The reset entity has a default type of `-/sys/reset` and standard properties:
-Same as [Login]
+Same as [Login][]
 You can add your own properties, but be careful not to use the standard property names.
 ##### Properties
-cf [Login]
+cf [Login][]
 
+[Login]: #login
+[OperationStatus]: #operationstatus
+[UserIdentification]: #useridentification
+[Token]: #token
