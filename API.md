@@ -1,4 +1,3 @@
-
 # seneca-user
 
 ## About
@@ -49,9 +48,9 @@ contains an `ok` field that is either true or false, indicating the success or f
    * `user`: specify user using a sys/user entity - for convenience use inside your own actions, when you already have a user entity loade`
 
 #### Result
-   * `ok: true if login succeeded, false if no
+   * `ok`: true if login succeeded, false if no
    * `login`: login entity, id is the login token, used as cookie
-   * `user`: user entit`
+   * `user`: user entity
    * `why`: indicates reason login failed or succeeded, refer to [source](https://github.com/senecajs/seneca-user/blob/master/lib/user.js) for codes.
 
 ### logout-user - Logout a user.
@@ -59,8 +58,8 @@ contains an `ok` field that is either true or false, indicating the success or f
 #### Details
 Update _sys/login_ entry to _active:false_. Adds _ended_ field with ISOString date time.
 #### Arguments: [Token]
-#### Provides:
-Same object format as login command result: {ok:true|false,user:,login:}
+#### Provides
+Same object format as login command result: `{ok:true|false,user,login}`
 
 ### register-user  - Register a new user.
 #### Pattern `role:user, cmd:register`
@@ -85,12 +84,12 @@ that.
    * `user`: new user entity
    * `why`: indicates reason registration failed, refer to [source](https://github.com/senecajs/seneca-user/blob/master/lib/user.js) for codes`
 
-### role:user, cmd:auth
-
+### check-token - Authenticate a login token
+#### Details
 Authenticate a login token, returning the associated `sys/login` and `sys/user` if
 the token is valid and active. Use this, for example, when handling
 HTTP requests with an authentication cookie, to get the user.
-
+#### Pattern: `role:user, cmd:auth`
 #### Arguments: [Token][]
 #### Result
 Same object format as login command result: `{ok:true|false,user:,login:}`
@@ -110,7 +109,8 @@ creates an entry in the `sys/reset` collection.
    * `user`: `sys/user` entity
    * `reset`: `sys/reset` entity
 
-### role:user, cmd:load_reset
+### load-reset - Load a reset entity
+#### Pattern: `role:user, cmd:load_reset`
 
 Load a `sys/reset` entity using a reset token. Use this to load the details of a reset request, possible to confirm with user.
 #### Arguments
@@ -121,7 +121,7 @@ Load a `sys/reset` entity using a reset token. Use this to load the details of a
    * `reset`: `sys/reset` entity
    * `why`: reason for failure
 
-###  - Execute a password reset action.
+### reset-password - Execute a password reset action.
 #### Details
 The user identified by the reset token is allowed to change their password. THe reset must be active, and the validity period must not be expired. On successful reset, the `sys/reset` is deactivated and cannot be reused.
 #### Pattern: `role:user, cmd:execute_reset`
@@ -168,7 +168,7 @@ The user identified by the reset token is allowed to change their password. THe 
 At least one of these arguments must be present.
 #### Result: [OperationStatus][]
 
-### activate-user - Deletes an user and all relationed records.
+### delete-user - Deletes an user and all relationed records.
 #### Pattern: `role:user, cmd:remove`
 #### Arguments
 ` `nick` - _string_ : the nick of the user to be updated
@@ -201,8 +201,8 @@ At least one of these arguments must be present.
 At least one of these arguments must be present
 
 ### Entities
-#### User`
-##### Path: -/sys/user`
+#### User
+##### Path: `-/sys/user`
 ##### About
 The user entity has a default type of `-/sys/user` and standard properties:
 You can add your own properties, but be careful not to use the standard property names.
